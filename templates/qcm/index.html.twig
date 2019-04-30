@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test{% endblock %}
+
+{% block body %}
+<section class="questions center-align">
+    {% for question in questions %}
+    <article>
+        <h4>Question {{ question.theme }}</h4> 
+        <br>       
+        <div class="sujet">            
+            <h5>{{ question.sujet | raw }}</h5>           
+        </div>
+        <br>
+        {% for proposition in question.propositions %}
+            <div class="propositions">
+                {{ proposition.choix}}
+            </div>            
+        <br>
+        {% endfor %}
+    </article>       
+    {% endfor %}       
+</section>
+{% endblock %}
+
