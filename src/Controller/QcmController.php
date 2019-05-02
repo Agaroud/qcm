@@ -31,6 +31,13 @@ class QcmController extends AbstractController
         'controller_name' => 'QcmController',
         'questions'=>$questions]);
     }
+
+    /**
+     * @Route("/qcm", name="qcm")
+     */
+    /*public function create(){
+        this->render ('qcm/index.html.twig');
+    }
   
 
     /**
