@@ -5,9 +5,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository") 
+ * @UniqueEntity(
+ * fields= {"email"}, message ="Cet email est déjà utilisé")
+ * @UniqueEntity(
+ * fields= {"matricule"}, message ="Ce matricule est déjà utilisé")
+ * @UniqueEntity(
+ * fields= {"username"}, message ="Ce pseudo est déjà utilisé")
  */
 class User implements UserInterface
 {
@@ -20,11 +27,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      */
     private $nom;
 
@@ -36,18 +45,25 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $matricule;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="6", minMessage="Votre mot de passe doit faire minimum 6 caractères")     
      */
-    private $mp;
+    private $password;
 
     /**
-     *  @Assert\EqualTo(propertyPath="mp", message="Vous n'avez pas tapé le même mot de passe")
+     *  @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas tapé le même mot de passe")
      */
-    public $confirm_mp;
+    public $confirm_password;
+
+    
 
     public function getId(): ?int
     {
@@ -90,6 +106,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function getMatricule(): ?string
     {
         return $this->matricule;
@@ -101,15 +129,15 @@ class User implements UserInterface
 
         return $this;
     }
-
-    public function getMp(): ?string
+    
+    public function getPassword(): ?string
     {
-        return $this->mp;
+        return $this->password;
     }
 
-    public function setMp(string $mp): self
+    public function setPassword(string $password): self
     {
-        $this->mp = $mp;
+        $this->password = $password;
 
         return $this;
     }
@@ -121,10 +149,6 @@ class User implements UserInterface
     public function getRoles() {
         return ['ROLE_USER'];
     }
-
-    public function getUserName(){}
-
-    public function getPassword(){}
-
+       
         
 }

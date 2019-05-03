@@ -15,10 +15,11 @@ class RegistrationType extends AbstractType
         $builder
             ->add('email')
             ->add('nom')
-            ->add('prenom')
+            ->add('prenom')            
+            ->add('username')
             ->add('matricule')
-            ->add('mp', PasswordType::class)
-            ->add('confirm_mp', PasswordType::class)
+            ->add('password', PasswordType::class)
+            ->add('confirm_password', PasswordType::class)
         ;
     }
 
