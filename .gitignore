@@ -1,18 +1,103 @@
+# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/public/bundles/
-/var/
+# Created by https://www.gitignore.io/api/visualstudiocode,windows,symfony
+# Edit at https://www.gitignore.io/?templates=visualstudiocode,windows,symfony
+
+### Symfony ###
+# Cache and logs (Symfony2)
+/app/cache/*
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+
+# Email spool folder
+/app/spool/*
+
+# Cache, session files and logs (Symfony3)
+/var/cache/*
+/var/logs/*
+/var/sessions/*
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+!var/sessions/.gitkeep
+
+# Logs (Symfony4)
+/var/log/*
+!var/log/.gitkeep
+
+# Parameters
+/app/config/parameters.yml
+/app/config/parameters.ini
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/bin/*
+!bin/console
+!bin/symfony_requirements
 /vendor/
-###< symfony/framework-bundle ###
 
-###> symfony/phpunit-bridge ###
-.phpunit
+# Assets and user uploads
+/web/bundles/
+/web/uploads/
+
+# PHPUnit
+/app/phpunit.xml
 /phpunit.xml
-###< symfony/phpunit-bridge ###
 
-###> symfony/web-server-bundle ###
+# Build data
+/build/
+
+# Composer PHAR
+/composer.phar
+
+# Backup entities generated with doctrine:generate:entities command
+**/Entity/*~
+
+# Embedded web-server pid file
 /.web-server-pid
-###< symfony/web-server-bundle ###
+
+### Symfony Patch ###
+/web/css/
+/web/js/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.gitignore.io/api/visualstudiocode,windows,symfony
+
+# Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+
