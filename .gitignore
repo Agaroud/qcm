@@ -1,7 +1,15 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-# Created by https://www.gitignore.io/api/visualstudiocode,windows,symfony
-# Edit at https://www.gitignore.io/?templates=visualstudiocode,windows,symfony
+# Created by https://www.gitignore.io/api/composer,symfony,visualstudiocode,windows
+# Edit at https://www.gitignore.io/?templates=composer,symfony,visualstudiocode,windows
+
+### Composer ###
+composer.phar
+/vendor/
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
 
 ### Symfony ###
 # Cache and logs (Symfony2)
@@ -35,7 +43,6 @@
 /bin/*
 !bin/console
 !bin/symfony_requirements
-/vendor/
 
 # Assets and user uploads
 /web/bundles/
@@ -97,7 +104,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/visualstudiocode,windows,symfony
+# End of https://www.gitignore.io/api/composer,symfony,visualstudiocode,windows
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
