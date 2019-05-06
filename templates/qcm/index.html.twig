@@ -8,22 +8,32 @@
 <br>
 <br>
 <section class="questions center-align">
-    {% for question in questions %}    
-    <article>
-        <h4>Question {{ question.theme }}</h4> 
-        <br>       
-        <div class="sujet">            
+    <form action="" method="post"> 
+        {% for question in questions %}    
+        <article>
+            <h4>Question {{ question.theme }}</h4> 
+            <br>       
+            <div class="sujet">            
             <h5>{{ question.sujet | raw }}</h5>           
-        </div>
-        <br>
-        {% for proposition in question.propositions %}
-            <div class="propositions">
+            </div>
+            <br>
+            {% for proposition in question.propositions %}
+                <div class="form-group">
+                    <input type="checkbox" id="{{proposition.id}}" name="{{question.id}}"
+                     value ="{{proposition.id}}">
+                    <label for="{{proposition.id}}">{{proposition.choix}}</label>
+                </div>
+           {# <div class="propositions">
                 {{ proposition.choix}}
-            </div>            
-        <br>
-        {% endfor %}
-    </article>       
-    {% endfor %}       
+            </div>#}          
+            <br>
+            {% endfor %}
+        </article>       
+    {% endfor %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Validez!</button>
+    </div>
+  </form>       
 </section>
 {% endblock %}
 

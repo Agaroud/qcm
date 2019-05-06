@@ -8,6 +8,7 @@ use App\Entity\Question;
 use App\Repository\QuestionRepository;
 use App\Entity\Proposition;
 use App\Repository\PropositionRepository;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class QcmController extends AbstractController
 {
