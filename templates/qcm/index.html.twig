@@ -9,9 +9,9 @@
 <br>
 <section class="questions center-align">
     <form action="" method="post"> 
-        {% for question in questions %}    
+        {% for question in questions  %}    
         <article>
-            <h4>Question {{ question.theme }}</h4> 
+            <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
             <br>       
             <div class="sujet">            
             <h5>{{ question.sujet | raw }}</h5>           
@@ -19,13 +19,10 @@
             <br>
             {% for proposition in question.propositions %}
                 <div class="form-group">
-                    <input type="checkbox" id="{{proposition.id}}" name="{{question.id}}"
+                    <input class="form-check-input" type="checkbox" id="{{proposition.id}}" name="{{question.id}}"
                      value ="{{proposition.id}}">
-                    <label for="{{proposition.id}}">{{proposition.choix}}</label>
-                </div>
-           {# <div class="propositions">
-                {{ proposition.choix}}
-            </div>#}          
+                    <label class="form-check-label" for="{{proposition.id}}">{{proposition.choix}}</label>
+                </div>                   
             <br>
             {% endfor %}
         </article>       
