@@ -1,14 +1,16 @@
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Test{% endblock %}
 
 {% block body %}
-
+    
 <h3  class="center-align">Veuillez remplir ce test QCM</h3>
 <br>
 <br>
 <section class="questions center-align">
-    <form action="" method="post"> 
+    <form action="{{ path('traitement_qcm')}}" method="post"> 
         {% for question in questions  %}    
         <article>
             <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
@@ -19,8 +21,8 @@
             <br>
             {% for proposition in question.propositions %}
                 <div class="form-group">
-                    <input class="form-check-input" type="checkbox" id="{{proposition.id}}" name="{{question.id}}"
-                     value ="{{proposition.id}}">
+                    <input class="form-check-input" type="checkbox" value ="{{question.id}}" name="{{proposition.id}}"
+                     >
                     <label class="form-check-label" for="{{proposition.id}}">{{proposition.choix}}</label>
                 </div>                   
             <br>

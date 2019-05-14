@@ -1,15 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    {% if error %}
+        <div>{{ error.message | replace({"Bad credentials." : "Email ou mot de passe inconnus"}) }}</div>
+    {% endif %}
     <h3>Connexion</h3>
 
     <form action="{{ path('security_login')}}" method="post">
         <div class="form-group">
-            <input placeholder="Adresse email..." required name="_username"
+            <input placeholder="Adresse email complète..." required id="username" name="_username" value="{{ last_username }}"
             type="text" class="form-control">
         </div>
         <div class="form-group">
-            <input placeholder="Mot de passe" required name="_password"
+            <input placeholder="Mot de passe" required id="password" name="_password"
             type="password" class="form-control">
         </div>
         <div class="form-group">

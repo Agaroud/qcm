@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+        <div class="questions center-align">
+            <h1>Test QCM prévention et sécurité incendie</h1> 
+        </div>
+    
+        <div class="questions center-align">
+            <h3 class="center-align">Resultat</h3>
+        </div> 
+
+        {% for tableau in arr  %}
+            <h4>{{tableau}}</h4> 
+        {% endfor %}   
+
+       
+{% endblock %}      

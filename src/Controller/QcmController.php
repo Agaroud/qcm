@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Reponse;
 use App\Entity\Question;
-use App\Repository\QuestionRepository;
 use App\Entity\Proposition;
+use App\Repository\QuestionRepository;
 use App\Repository\PropositionRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class QcmController extends AbstractController
 {
@@ -25,13 +28,28 @@ class QcmController extends AbstractController
     /**
      * @Route("/qcm", name="qcm")
      */
-    public function index(QuestionRepository $repo)
+    public function index(QuestionRepository $repo, Request $request)
     {
         $questions= $repo->findAll();        
-        return $this->render('qcm/index.html.twig', [
-        'controller_name' => 'QcmController',
+        return $this->render('qcm/index.html.twig', [/*
+        'controller_name' => 'QcmController',*/
         'questions'=>$questions]);
     }
+
+    /**
+     * @Route("/qcm/resultat", name="traitement_qcm")
+     */
+    public function traitement(Request $request, ObjectManager $manager){
+      
+    dump($request);
+
+    $arr = $request->request->all();
+    
+    return $this->render('qcm/resultat.html.twig', [
+        'arr'=>$arr]); 
+    
+    }
+
 
     /**
      * @Route("/qcm", name="qcm")
