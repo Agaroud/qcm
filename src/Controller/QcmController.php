@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Entity\Proposition;
@@ -40,13 +41,28 @@ class QcmController extends AbstractController
      * @Route("/qcm/resultat", name="traitement_qcm")
      */
     public function traitement(Request $request, ObjectManager $manager){
-      
-    dump($request);
-
-    $arr = $request->request->all();
     
-    return $this->render('qcm/resultat.html.twig', [
-        'arr'=>$arr]); 
+    //$request = Request::createFromGlobals();
+    
+    $quest = $request->request->all();
+    //$prop = $request->request->keys();
+
+
+    
+    
+    foreach($quest as $prop=>$qst){
+        $reponse= new Reponse();
+        $reponse->setIdQuestion($qst);
+        $reponse->setIdProposition($prop);
+        $reponse->setCreatedAt(new \DateTime());
+        $manager->persist($reponse);
+        $manager->flush();
+    }
+
+    
+    
+    return $this->render('qcm/resultat.html.twig', ['quest'=>$quest ,
+        'prop'=>$prop]);
     
     }
 
