@@ -13,6 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 
 class QcmController extends AbstractController
 {
@@ -31,10 +32,12 @@ class QcmController extends AbstractController
      */
     public function index(QuestionRepository $repo, Request $request)
     {
-        $questions= $repo->findAll();        
+        $questions= $repo->findAll();
+        dump($questions);      
         return $this->render('qcm/index.html.twig', [/*
         'controller_name' => 'QcmController',*/
-        'questions'=>$questions]);
+        'questions'=>$questions]); 
+               
     }
 
     /**
@@ -42,23 +45,28 @@ class QcmController extends AbstractController
      */
     public function traitement(Request $request, ObjectManager $manager){
     
-    //$request = Request::createFromGlobals();
-    
     $quest = $request->request->all();
-    //$prop = $request->request->keys();
-
-
-    
+    //$prop = $request->request->keys();   
     
     foreach($quest as $prop=>$qst){
         $reponse= new Reponse();
-        $reponse->setIdQuestion($qst);
+        $reponse->setQuestionId($qst);
         $reponse->setIdProposition($prop);
         $reponse->setCreatedAt(new \DateTime());
         $manager->persist($reponse);
         $manager->flush();
     }
 
+    $repository = $this->getDoctrine()->getRepository(Proposition::class);
+
+    $null = $repository->findAllNull();
+    dump($null);
+
+    
+    /*SELECT *
+FROM proposition 
+LEFT JOIN reponse ON proposition.id = reponse.id_proposition
+WHERE proposition.vrai = '1'*/
     
     
     return $this->render('qcm/resultat.html.twig', ['quest'=>$quest ,

@@ -16,11 +16,7 @@ class Reponse
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idQuestion;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -31,23 +27,17 @@ class Reponse
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $questionId;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdQuestion(): ?string
-    {
-        return $this->idQuestion;
-    }
-
-    public function setIdQuestion(string $idQuestion): self
-    {
-        $this->idQuestion = $idQuestion;
-
-        return $this;
-    }
-
+    
     public function getIdProposition(): ?string
     {
         return $this->idProposition;
@@ -68,6 +58,18 @@ class Reponse
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getQuestionId(): ?int
+    {
+        return $this->questionId;
+    }
+
+    public function setQuestionId(int $questionId): self
+    {
+        $this->questionId = $questionId;
 
         return $this;
     }

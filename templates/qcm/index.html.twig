@@ -11,6 +11,7 @@
 <br>
 <section class="questions center-align">
     <form action="{{ path('traitement_qcm')}}" method="post"> 
+    
         {% for question in questions  %}    
         <article>
             <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
@@ -19,20 +20,23 @@
             <h5>{{ question.sujet | raw }}</h5>           
             </div>
             <br>
+            
             {% for proposition in question.propositions %}
                 <div class="form-group">
-                    <input class="form-check-input" type="checkbox" value ="{{question.id}}" name="{{proposition.id}}"
+                    <input class="form-check-input" type="checkbox" value ="{{ question.id  }}" name="{{ proposition.id  }}"
                      >
                     <label class="form-check-label" for="{{proposition.id}}">{{proposition.choix}}</label>
                 </div>                   
             <br>
             {% endfor %}
+            
+            
         </article>       
-    {% endfor %}
+    {% endfor %}    
     <div class="form-group">
         <button type="submit" class="btn btn-success">Validez!</button>
     </div>
-  </form>       
+  </form>      
 </section>
 {% endblock %}
 

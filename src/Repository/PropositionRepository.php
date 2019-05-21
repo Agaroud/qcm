@@ -19,6 +19,21 @@ class PropositionRepository extends ServiceEntityRepository
         parent::__construct($registry, Proposition::class);
     }
 
+    public function findAllNull()//:array
+    {
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        "SELECT COUNT (p)
+         FROM App\Entity\Proposition p
+         LEFT JOIN App\Entity\Reponse r 
+         WITH p.id=r.idProposition   
+         WHERE p.vrai = '1' AND  r.idProposition IS NULL");
+
+    // returns an array of Product objects
+    return $query->execute();
+        
+    }
+
     // /**
     //  * @return Proposition[] Returns an array of Proposition objects
     //  */
