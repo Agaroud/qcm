@@ -23,17 +23,31 @@ class PropositionRepository extends ServiceEntityRepository
     {
     $entityManager = $this->getEntityManager();
     $query = $entityManager->createQuery(
-        "SELECT COUNT (p)
+        "SELECT COUNT (p) AS retenu
          FROM App\Entity\Proposition p
          LEFT JOIN App\Entity\Reponse r 
          WITH p.id=r.idProposition   
          WHERE p.vrai = '1' AND  r.idProposition IS NULL");
 
     // returns an array of Product objects
-    return $query->execute();
-        
+    $result= $query->execute();    
+    return $result[0]['retenu'];        
     }
 
+    public function findMistakes()//:array
+    {
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        "SELECT COUNT (p) AS retenu
+         FROM App\Entity\Proposition p
+         JOIN App\Entity\Reponse r 
+         WITH p.id=r.idProposition   
+         WHERE p.vrai = '0'");
+
+    // returns an array of Product objects
+    $result= $query->execute();    
+    return $result[0]['retenu'];
+    }
     // /**
     //  * @return Proposition[] Returns an array of Proposition objects
     //  */

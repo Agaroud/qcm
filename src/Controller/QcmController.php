@@ -47,7 +47,7 @@ class QcmController extends AbstractController
     
     $quest = $request->request->all();
     //$prop = $request->request->keys();   
-    
+    $user=$this->getUser();
     foreach($quest as $prop=>$qst){
         $reponse= new Reponse();
         $reponse->setQuestionId($qst);
@@ -60,7 +60,13 @@ class QcmController extends AbstractController
     $repository = $this->getDoctrine()->getRepository(Proposition::class);
 
     $null = $repository->findAllNull();
-    dump($null);
+    $mistakes = $repository->findMistakes();
+    dump($mistakes);
+    $note = 5-($null)-($mistakes);
+    if($note < 0 ){
+        $note = 0;
+    }
+
 
     
     /*SELECT *
@@ -69,8 +75,7 @@ LEFT JOIN reponse ON proposition.id = reponse.id_proposition
 WHERE proposition.vrai = '1'*/
     
     
-    return $this->render('qcm/resultat.html.twig', ['quest'=>$quest ,
-        'prop'=>$prop]);
+return $this->render('qcm/resultat.html.twig', ['note'=>$note]);
     
     }
 

@@ -2,32 +2,10 @@
 
 {% block body %}
     
-        <div class="questions center-align">
-            <h1>Test QCM prévention et sécurité incendie</h1> 
-        </div>
-    
-        <div class="questions center-align">
-            <h3 class="center-align">Resultat</h3>
-        </div> 
-        <div class="questions d-flex flex-row bd-highlight mb-3">
-            <div class="p-3">
-            <h4 >Id Question</h4>
-            {% for quests in quest  %}            
-                <h4>{{quests}}</h4>            
-            {% endfor %}
-            </div>
-            <div class="p-3">
-            <h4>Id Proposition</h4>
-            {% for props in prop  %}            
-                <h4>{{props}}</h4> 
-            {% endfor %}
-                     
-            </div>
-        </div> 
-
         
-        
-
-
-       
+            <h3>Votre note est de {{note}}</h3>
+               
+            </div>
+        </div>  
+  
 {% endblock %}      
