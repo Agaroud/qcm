@@ -25,6 +25,8 @@ class PropositionRepository extends ServiceEntityRepository
     $query = $entityManager->createQuery(
         "SELECT COUNT (p) AS retenu
          FROM App\Entity\Proposition p
+         JOIN App\Entity\QuestionQcm q
+         WITH p.question=q.idQuestion 
          LEFT JOIN App\Entity\Reponse r 
          WITH p.id=r.idProposition   
          WHERE p.vrai = '1' AND  r.idProposition IS NULL");
@@ -40,6 +42,8 @@ class PropositionRepository extends ServiceEntityRepository
     $query = $entityManager->createQuery(
         "SELECT COUNT (p) AS retenu
          FROM App\Entity\Proposition p
+         JOIN App\Entity\QuestionQcm q
+         WITH p.question=q.idQuestion 
          JOIN App\Entity\Reponse r 
          WITH p.id=r.idProposition   
          WHERE p.vrai = '0'");

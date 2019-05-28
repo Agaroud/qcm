@@ -12,7 +12,7 @@
 <section class="questions center-align">
     <form action="{{ path('traitement_qcm')}}" method="post"> 
     
-        {% for question in questions  %}    
+        {% for question in questions %}    
         <article>
             <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
             <br>       

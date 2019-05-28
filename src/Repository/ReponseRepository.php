@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Reponse;
+use App\Entity\Proposition;
+use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,6 +21,20 @@ class ReponseRepository extends ServiceEntityRepository
         parent::__construct($registry, Reponse::class);
     }
 
+    /*public function findBonnesReponses()//:array
+    {
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        "SELECT p AS bonne
+         FROM App\Entity\Proposition p
+         JOIN App\Entity\Reponse r 
+         WITH p.id=r.idProposition   
+         WHERE p.vrai = '1'");
+
+    // returns an array of Product objects
+    $result= $query->execute();    
+    return $result['bonne'];
+    }*/
     // /**
     //  * @return Reponse[] Returns an array of Reponse objects
     //  */

@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use DateTime;
+use App\Entity\User;
 use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Entity\Proposition;
+use App\Entity\QuestionQcm;
 use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PropositionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
 
 class QcmController extends AbstractController
 {
@@ -30,52 +32,60 @@ class QcmController extends AbstractController
     /**
      * @Route("/qcm", name="qcm")
      */
-    public function index(QuestionRepository $repo, Request $request)
+    public function index(QuestionRepository $repo, Request $request, ObjectManager $manager)
     {
-        $questions= $repo->findAll();
-        dump($questions);      
-        return $this->render('qcm/index.html.twig', [/*
-        'controller_name' => 'QcmController',*/
-        'questions'=>$questions]); 
-               
+        $questions= $repo->findQuestions(); 
+        //$id=$questions->getId();
+        //$quest= $questions->values();      
+        dump($questions);
+        //dump($questions[0].id);
+        //dump($questions[0]['id']);
+        foreach($questions as $questionCurrent){            
+            $id=$questionCurrent->getId();
+            $questionQcm= new QuestionQcm();
+            $questionQcm->setIdQuestion($id);
+            $manager->persist($questionQcm);
+            $manager->flush();
+        }
+        return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
+              
     }
 
     /**
      * @Route("/qcm/resultat", name="traitement_qcm")
      */
-    public function traitement(Request $request, ObjectManager $manager){
+    public function traitement(Request $request, ObjectManager $manager)
+    {
     
-    $quest = $request->request->all();
-    //$prop = $request->request->keys();   
-    $user=$this->getUser();
-    foreach($quest as $prop=>$qst){
-        $reponse= new Reponse();
-        $reponse->setQuestionId($qst);
-        $reponse->setIdProposition($prop);
-        $reponse->setCreatedAt(new \DateTime());
-        $manager->persist($reponse);
-        $manager->flush();
-    }
+        $quest = $request->request->all();
+        
+        //$prop = $request->request->keys();   
+        $user=$this->getUser();
+        
+        foreach($quest as $prop=>$qst){
+            $reponse= new Reponse();
+            $reponse->setQuestionId($qst);
+            $reponse->setIdProposition($prop);
+            $reponse->setCreatedAt(new \DateTime());
+            $reponse->setUser($user);
+            $manager->persist($reponse);
+            $manager->flush();
+        }   
 
-    $repository = $this->getDoctrine()->getRepository(Proposition::class);
+        $repository = $this->getDoctrine()->getRepository(Proposition::class);
 
-    $null = $repository->findAllNull();
-    $mistakes = $repository->findMistakes();
-    dump($mistakes);
-    $note = 5-($null)-($mistakes);
-    if($note < 0 ){
-        $note = 0;
-    }
-
-
+        $null = $repository->findAllNull();
+        $mistakes = $repository->findMistakes();
+        dump($mistakes);
+        $note = 3-($null)-($mistakes);
+        if($note < 0 ){
+            $note = 0;
+        }    
     
-    /*SELECT *
-FROM proposition 
-LEFT JOIN reponse ON proposition.id = reponse.id_proposition
-WHERE proposition.vrai = '1'*/
-    
-    
-return $this->render('qcm/resultat.html.twig', ['note'=>$note]);
+        /*$repo = $this->getDoctrine()->getRepository(Reponse::class);
+        $bReponse = $repo->findBonnesReponses();
+        dump($bReponse);*/
+        return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
     
     }
 

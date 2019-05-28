@@ -2,10 +2,17 @@
 
 {% block body %}
     
+        <div>
+            <h4>{{user.username}} vous avez obtenu une note de {{note}}/3</h4>               
+        </div>
         
-            <h3>Votre note est de {{note}}</h3>
-               
-            </div>
-        </div>  
+            
+            {#{% for bReponses in bReponse  %}  
+                <div>
+                    <h4>{{bReponses.choix}}</h4>
+                </div>                   
+            <br>
+            {% endfor %}#}
+        
   
 {% endblock %}      
