@@ -65,17 +65,29 @@ class User implements UserInterface
      */
     public $confirm_password;
 
+    
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="user", orphanRemoval=true)
      */
     private $reponses;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\QuestionQcm", mappedBy="userId")
+     */
+    private $questionQcms;
 
     
 
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
-        $this->qcms = new ArrayCollection();
+        $this->questionQcms = new ArrayCollection();
+        
     }
 
     
@@ -191,6 +203,34 @@ class User implements UserInterface
             if ($reponse->getUser() === $this) {
                 $reponse->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuestionQcm[]
+     */
+    public function getQuestionQcms(): Collection
+    {
+        return $this->questionQcms;
+    }
+
+    public function addQuestionQcm(QuestionQcm $questionQcm): self
+    {
+        if (!$this->questionQcms->contains($questionQcm)) {
+            $this->questionQcms[] = $questionQcm;
+            $questionQcm->addUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionQcm(QuestionQcm $questionQcm): self
+    {
+        if ($this->questionQcms->contains($questionQcm)) {
+            $this->questionQcms->removeElement($questionQcm);
+            $questionQcm->removeUserId($this);
         }
 
         return $this;

@@ -8,6 +8,8 @@ use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Entity\Proposition;
 use App\Entity\QuestionQcm;
+use App\Repository\ReponseRepository;
+use App\Repository\QuestionQcmRepository;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PropositionRepository;
@@ -32,18 +34,21 @@ class QcmController extends AbstractController
     /**
      * @Route("/qcm", name="qcm")
      */
-    public function index(QuestionRepository $repo, Request $request, ObjectManager $manager)
+    public function index(QuestionQcmRepository $reposit, QuestionRepository $repo, Request $request, ObjectManager $manager)
     {
+        $reset= $reposit->reset();
         $questions= $repo->findQuestions(); 
         //$id=$questions->getId();
         //$quest= $questions->values();      
         dump($questions);
         //dump($questions[0].id);
         //dump($questions[0]['id']);
+        $user=$this->getUser();
         foreach($questions as $questionCurrent){            
             $id=$questionCurrent->getId();
             $questionQcm= new QuestionQcm();
-            $questionQcm->setIdQuestion($id);
+            $questionQcm->setQuestionId($id); 
+            $questionQcm->setUser($user);           
             $manager->persist($questionQcm);
             $manager->flush();
         }
@@ -54,11 +59,10 @@ class QcmController extends AbstractController
     /**
      * @Route("/qcm/resultat", name="traitement_qcm")
      */
-    public function traitement(Request $request, ObjectManager $manager)
+    public function traitement(ReponseRepository $repo,Request $request, ObjectManager $manager)
     {
-    
-        $quest = $request->request->all();
-        
+        $reset= $repo->reset();
+        $quest = $request->request->all();        
         //$prop = $request->request->keys();   
         $user=$this->getUser();
         

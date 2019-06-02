@@ -21,6 +21,16 @@ class ReponseRepository extends ServiceEntityRepository
         parent::__construct($registry, Reponse::class);
     }
 
+    public function reset()
+    {       
+               
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "DELETE FROM App\Entity\Reponse");            
+            $result= $query->execute();
+            return $result;
+    }
+
     /*public function findBonnesReponses()//:array
     {
     $entityManager = $this->getEntityManager();
