@@ -48,7 +48,8 @@ class QcmController extends AbstractController
             $id=$questionCurrent->getId();
             $questionQcm= new QuestionQcm();
             $questionQcm->setQuestionId($id); 
-            $questionQcm->setUser($user);           
+            $questionQcm->setUser($user); 
+            $questionQcm->setCreatedAt(new \DateTime());          
             $manager->persist($questionQcm);
             $manager->flush();
         }

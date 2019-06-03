@@ -77,7 +77,7 @@ class User implements UserInterface
     private $reponses;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\QuestionQcm", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuestionQcm", mappedBy="user", orphanRemoval=true)
      */
     private $questionQcms;
 
