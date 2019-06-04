@@ -25,11 +25,22 @@ class QcmController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-
     public function home()
     {
         return $this->render('qcm/home.html.twig');
     }
+
+    
+    /**
+     * @Route("/accueil", name="accueil")
+     */
+    public function accueil()
+    {
+        $user=$this->getUser();
+        return $this->render('qcm/accueil.html.twig', ['user'=>$user]);
+    }
+
+      
 
     /**
      * @Route("/qcm", name="qcm")
@@ -87,9 +98,6 @@ class QcmController extends AbstractController
             $note = 0;
         }    
     
-        /*$repo = $this->getDoctrine()->getRepository(Reponse::class);
-        $bReponse = $repo->findBonnesReponses();
-        dump($bReponse);*/
         return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
     
     }

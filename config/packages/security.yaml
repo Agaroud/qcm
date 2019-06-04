@@ -1,4 +1,8 @@
 security:
+    role_hierarchy:
+        # un membre avec le ROLE_ADMIN aura également le ROLE_USER
+        ROLE_ADMIN: ROLE_USER
+
     encoders:
         App\Entity\User:
             algorithm: bcrypt
@@ -20,22 +24,15 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
-                default_target_path: qcm               
+                default_target_path: accueil               
 
             logout:
                 path: security_logout
                 target: home
 
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
+            
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/member, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        
