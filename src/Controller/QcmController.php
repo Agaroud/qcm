@@ -4,17 +4,22 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\User;
+use App\Entity\QcmTab;
 use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Entity\Proposition;
 use App\Entity\QuestionQcm;
+use App\Entity\AlertSalarie;
+use App\Repository\UserRepository;
 use App\Repository\ReponseRepository;
-use App\Repository\QuestionQcmRepository;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PropositionRepository;
+use App\Repository\QuestionQcmRepository;
+use App\Repository\AlertSalarieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +42,7 @@ class QcmController extends AbstractController
     public function accueil()
     {
         $user=$this->getUser();
+        
         return $this->render('qcm/accueil.html.twig', ['user'=>$user]);
     }
 
@@ -49,11 +55,7 @@ class QcmController extends AbstractController
     {
         $reset= $reposit->reset();
         $questions= $repo->findQuestions(); 
-        //$id=$questions->getId();
-        //$quest= $questions->values();      
-        dump($questions);
-        //dump($questions[0].id);
-        //dump($questions[0]['id']);
+             
         $user=$this->getUser();
         foreach($questions as $questionCurrent){            
             $id=$questionCurrent->getId();
@@ -71,11 +73,10 @@ class QcmController extends AbstractController
     /**
      * @Route("/qcm/resultat", name="traitement_qcm")
      */
-    public function traitement(ReponseRepository $repo,Request $request, ObjectManager $manager)
+    public function traitement(UserRepository $reposite, ReponseRepository $repo,Request $request, ObjectManager $manager)
     {
         $reset= $repo->reset();
         $quest = $request->request->all();        
-        //$prop = $request->request->keys();   
         $user=$this->getUser();
         
         foreach($quest as $prop=>$qst){
@@ -96,28 +97,23 @@ class QcmController extends AbstractController
         $note = 3-($null)-($mistakes);
         if($note < 0 ){
             $note = 0;
-        }    
-    
+           }
+           
+        
+        $qcmTab= new QcmTab();                      
+        $qcmTab->setIdUser($user);
+        $qcmTab->setNote($note);
+        $qcmTab->setCreatedAt(new \DateTime());
+        $manager->persist($qcmTab);
+        $manager->flush();
+        
+
+        $userId = $this->getUser('session')->getId();
+
+        $derniereNote = $reposite->derniereNote($userId,$note);
         return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
     
     }
-
-
-    /**
-     * @Route("/qcm", name="qcm")
-     */
-    /*public function create(){
-        this->render ('qcm/index.html.twig');
-    }
-  
-
-    /**
-     * @Route("/qcm/{idQuestion}", name="qcm")
-     */
-
-    /*public function propo(Propositions $propositions)
-    {
-        $repo = $this->getDoctrine()->getRepository(Proposition::class);        
-        return $this->render('qcm/index.html.twig', ['propositions'=> $propositions]);
-    }*/
+    
+    
 }

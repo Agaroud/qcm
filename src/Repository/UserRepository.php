@@ -20,6 +20,20 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function derniereNote($userId,$note)//:array
+    {
+    
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        "UPDATE App\Entity\User u
+         SET u.derniereNote = '$note'         
+         WHERE u.id = '$userId' ");
+
+    // returns an array of Product objects
+    $result= $query->execute();    
+          
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

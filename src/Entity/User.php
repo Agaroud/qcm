@@ -81,12 +81,24 @@ class User implements UserInterface
      */
     private $questionQcms;
 
-    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $derniereNote;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QcmTab", mappedBy="idUser")
+     */
+    private $qcmTabs;
+
+       
 
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
         $this->questionQcms = new ArrayCollection();
+        $this->qcmTabs = new ArrayCollection();
+        $this->alertSalaries = new ArrayCollection();
         
     }
 
@@ -242,7 +254,50 @@ class User implements UserInterface
         }
 
         return $this;
-    } 
+    }
+
+    public function getDerniereNote(): ?string
+    {
+        return $this->derniereNote;
+    }
+
+    public function setDerniereNote(?string $derniereNote): self
+    {
+        $this->derniereNote = $derniereNote;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QcmTab[]
+     */
+    public function getQcmTabs(): Collection
+    {
+        return $this->qcmTabs;
+    }
+
+    public function addQcmTab(QcmTab $qcmTab): self
+    {
+        if (!$this->qcmTabs->contains($qcmTab)) {
+            $this->qcmTabs[] = $qcmTab;
+            $qcmTab->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQcmTab(QcmTab $qcmTab): self
+    {
+        if ($this->qcmTabs->contains($qcmTab)) {
+            $this->qcmTabs->removeElement($qcmTab);
+            // set the owning side to null (unless already changed)
+            if ($qcmTab->getIdUser() === $this) {
+                $qcmTab->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }    
        
         
 }
