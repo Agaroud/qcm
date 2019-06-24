@@ -39,10 +39,13 @@ class QcmController extends AbstractController
     /**
      * @Route("/accueil", name="accueil")
      */
-    public function accueil()
+    public function accueil(Request $request)
     {
         $user=$this->getUser();
-        
+        $session=$request->getSession();  
+        //$session->remove('mesReponses');
+        dump($session->get('mesReponses'));   
+               
         return $this->render('qcm/accueil.html.twig', ['user'=>$user]);
     }
 
@@ -53,33 +56,56 @@ class QcmController extends AbstractController
      */
     public function index(QuestionQcmRepository $reposit, QuestionRepository $repo, Request $request, ObjectManager $manager)
     {
-        $reset= $reposit->reset();
-        $questions= $repo->findQuestions(); 
-             
+        $session=$request->getSession();        
         $user=$this->getUser();
-        foreach($questions as $questionCurrent){            
-            $id=$questionCurrent->getId();
-            $questionQcm= new QuestionQcm();
-            $questionQcm->setQuestionId($id); 
-            $questionQcm->setUser($user); 
-            $questionQcm->setCreatedAt(new \DateTime());          
-            $manager->persist($questionQcm);
-            $manager->flush();
+
+        
+        
+        if ($session->has('monQcm')){
+            $questions=$session->get('monQcm');
+            return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
         }
-        return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
+        
+        else {
+            $questions= $repo->findQuestions();         
+            $session->set('monQcm', $questions); 
+              
+             
+            foreach($questions as $questionCurrent){            
+                $id=$questionCurrent->getId();
+                $questionQcm= new QuestionQcm();
+                $questionQcm->setQuestionId($id); 
+                $questionQcm->setUser($user); 
+                $questionQcm->setCreatedAt(new \DateTime());          
+                $manager->persist($questionQcm);
+                $manager->flush();
+            }
+            return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
+        }
               
     }
 
     /**
      * @Route("/qcm/resultat", name="traitement_qcm")
      */
-    public function traitement(UserRepository $reposite, ReponseRepository $repo,Request $request, ObjectManager $manager)
+    public function traitement(UserRepository $reposite, QuestionQcmRepository $reposit, ReponseRepository $repo,Request $request, ObjectManager $manager)
     {
-        $reset= $repo->reset();
-        $quest = $request->request->all();        
+
+        $session=$request->getSession();
         $user=$this->getUser();
+
+        if ($session->has('mesReponses')){
+            $session->invalidate(); 
+            $session->clear(); 
+            return $this->redirectToroute('security_logout'); 
+        } 
+
+        else {        
+            
+            $quest = $request->request->all(); 
+            $session->set('mesReponses', $quest);             
         
-        foreach($quest as $prop=>$qst){
+            foreach($quest as $prop=>$qst){
             $reponse= new Reponse();
             $reponse->setQuestionId($qst);
             $reponse->setIdProposition($prop);
@@ -87,33 +113,37 @@ class QcmController extends AbstractController
             $reponse->setUser($user);
             $manager->persist($reponse);
             $manager->flush();
-        }   
+            }   
 
-        $repository = $this->getDoctrine()->getRepository(Proposition::class);
+            $repository = $this->getDoctrine()->getRepository(Proposition::class);
 
-        $null = $repository->findAllNull();
-        $mistakes = $repository->findMistakes();
-        dump($mistakes);
-        $note = 3-($null)-($mistakes);
-        if($note < 0 ){
+            $null = $repository->findAllNull($user);
+            $mistakes = $repository->findMistakes($user);
+            //dump($mistakes);
+            $note = 3-($null)-($mistakes);
+
+            if($note < 0 ){
             $note = 0;
-           }
+            }
+
+            $reset= $reposit->reset($user);
+            $resete= $repo->reset($user);  
+        
+            $qcmTab= new QcmTab();                      
+            $qcmTab->setIdUser($user);
+            $qcmTab->setNote($note);
+            $qcmTab->setCreatedAt(new \DateTime());
+            $manager->persist($qcmTab);
+            $manager->flush();
+        
+
+            $userId = $this->getUser('session')->getId();
+
+            $derniereNote = $reposite->derniereNote($userId,$note);
+            return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
+        }    
            
-        
-        $qcmTab= new QcmTab();                      
-        $qcmTab->setIdUser($user);
-        $qcmTab->setNote($note);
-        $qcmTab->setCreatedAt(new \DateTime());
-        $manager->persist($qcmTab);
-        $manager->flush();
-        
+           
+    }    
 
-        $userId = $this->getUser('session')->getId();
-
-        $derniereNote = $reposite->derniereNote($userId,$note);
-        return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
-    
-    }
-    
-    
 }

@@ -28,6 +28,7 @@ class QuestionRepository extends ServiceEntityRepository
             "SELECT q FROM App\Entity\Question q ORDER BY RAND()")->setMaxResults(3);            
             $result= $query->execute();
             return $result;
+            
     }
 
     // /**

@@ -24,7 +24,8 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
-                default_target_path: accueil               
+                default_target_path: accueil 
+                #csrf_token_generator: security.csrf.token_manager              
 
             logout:
                 path: security_logout

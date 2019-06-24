@@ -19,25 +19,27 @@ class PropositionRepository extends ServiceEntityRepository
         parent::__construct($registry, Proposition::class);
     }
 
-    public function findAllNull()//:array
+    public function findAllNull($user)//:array
     {
     
     $entityManager = $this->getEntityManager();
     $query = $entityManager->createQuery(
         "SELECT COUNT (p) AS retenu
          FROM App\Entity\Proposition p
-         JOIN App\Entity\QuestionQcm q
-         WITH p.question=q.questionId         
+         JOIN App\Entity\QuestionQcm q         
+         WITH p.question=q.questionId
+         AND q.user=:var         
          LEFT JOIN App\Entity\Reponse r 
-         WITH p.id=r.idProposition   
-         WHERE p.vrai = '1' AND  r.idProposition IS NULL ");
+         WITH p.id=r.idProposition         
+         WHERE p.vrai = '1' 
+         AND r.idProposition IS NULL ")->setParameter('var',$user);
 
     // returns an array of Product objects
     $result= $query->execute();    
     return $result[0]['retenu'];        
     }
 
-    public function findMistakes()//:array
+    public function findMistakes($user)//:array
     {
     $entityManager = $this->getEntityManager();
     $query = $entityManager->createQuery(
@@ -46,8 +48,9 @@ class PropositionRepository extends ServiceEntityRepository
          JOIN App\Entity\QuestionQcm q
          WITH p.question = q.questionId
          JOIN App\Entity\Reponse r 
-         WITH p.id=r.idProposition   
-         WHERE p.vrai = '0'");
+         WITH p.id=r.idProposition
+         WHERE r.user=:var   
+         AND p.vrai = '0' ")->setParameter('var',$user);
 
     // returns an array of Product objects
     $result= $query->execute();    

@@ -1,18 +1,22 @@
 
 
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Test{% endblock %}
 
 {% block body %}
-</br>   
-<h4 class="col-md-4 ml-auto mr-auto">{{ app.user.username }} veuillez remplir ce test QCM</h4>
-<h4 class="col-md-7 ml-auto mr-auto">Pour chaque question, une ou plusieurs réponses sont possibles (une mauvaise réponse ou une omission vous retirera 1 point)</h4>
+</br>
+<div class="text-center" >
+    <h4> {{ app.user.username }} veuillez remplir ce test QCM</h4>
+    <p>Pour chaque question, une ou plusieurs réponses sont possibles (une mauvaise réponse ou une omission vous retirera 1 point)</p>
+</div>
 <br>
 <br>
 <section class="questions center-align">
     <form action="{{ path('traitement_qcm')}}" method="post"> 
-    
+            
         {% for question in questions %}    
         <article>
             <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
@@ -29,15 +33,16 @@
                     <label class="form-check-label" for="{{proposition.id}}">{{proposition.choix}}</label>
                 </div>                   
             <br>
-            {% endfor %}
+            {% endfor %}         
             
-            
-        </article>       
-    {% endfor %}    
-    <div class="form-group">
-        <button type="submit" class="btn btn-success">Validez!</button>
-    </div>
-  </form>      
+        </article>      
+        {% endfor %}
+
+            <div class="form-group">            
+                <button type="submit" class="btn btn-success">Validez!</button>          
+            </div> 
+   
+  </form>
+ 
 </section>
 {% endblock %}
-
