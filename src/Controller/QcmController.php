@@ -35,6 +35,15 @@ class QcmController extends AbstractController
         return $this->render('qcm/home.html.twig');
     }
 
+    /**
+     * @Route("/deconnexion", name="deconnect")
+     */
+    public function deconnect()
+    {
+        return $this->render('qcm/deconnexion.html.twig');
+    }
+
+
     
     /**
      * @Route("/accueil", name="accueil")

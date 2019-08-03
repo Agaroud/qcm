@@ -29,7 +29,7 @@ security:
 
             logout:
                 path: security_logout
-                target: home
+                target: deconnect
 
             
     # Easy way to control access for large sections of your site
