@@ -65,32 +65,33 @@ class QcmController extends AbstractController
      */
     public function index(QuestionQcmRepository $reposit, QuestionRepository $repo, Request $request, ObjectManager $manager)
     {
-        $session=$request->getSession();        
-        $user=$this->getUser();
+        $session=$request->getSession();  
+        
+            $user=$this->getUser();
 
         
         
-        if ($session->has('monQcm')){
-            $questions=$session->get('monQcm');
-            return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
-        }
+            if ($session->has('monQcm')){
+                $questions=$session->get('monQcm');
+                return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
+            }
         
-        else {
-            $questions= $repo->findQuestions();         
-            $session->set('monQcm', $questions); 
+            else {
+                $questions= $repo->findQuestions();         
+                $session->set('monQcm', $questions); 
               
              
-            foreach($questions as $questionCurrent){            
-                $id=$questionCurrent->getId();
-                $questionQcm= new QuestionQcm();
-                $questionQcm->setQuestionId($id); 
-                $questionQcm->setUser($user); 
-                $questionQcm->setCreatedAt(new \DateTime());          
-                $manager->persist($questionQcm);
-                $manager->flush();
+                foreach($questions as $questionCurrent){            
+                    $id=$questionCurrent->getId();
+                    $questionQcm= new QuestionQcm();
+                    $questionQcm->setQuestionId($id); 
+                    $questionQcm->setUser($user); 
+                    $questionQcm->setCreatedAt(new \DateTime());          
+                    $manager->persist($questionQcm);
+                    $manager->flush();
+                }
+                return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
             }
-            return $this->render('qcm/index.html.twig', ['questions'=>$questions]); 
-        }
               
     }
 
