@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    </br>
+    {% if not app.user %}
+     <div class="text-center">
+        <h3>Merci de vous connecter</h3>
+     </div>
+    {% else %}
+    <div class="text-center">
+        <h4>Content de vous revoir {{user.username}}</h4>        
+    </div>
+    </br>
+    <div class="text-center">
+        <h4>Appuyez sur l'onglet QCM pour commencer le test<h4> 
+    </div>
+    {% endif %}   
+{% endblock %}
