@@ -21,14 +21,12 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     public function findQuestions()
-    {       
-               
+    {    
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
             "SELECT q FROM App\Entity\Question q ORDER BY RAND()")->setMaxResults(3);            
             $result= $query->execute();
-            return $result;
-            
+            return $result;            
     }
 
     // /**

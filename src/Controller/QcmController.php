@@ -79,6 +79,7 @@ class QcmController extends AbstractController
             else {
                 $questions= $repo->findQuestions();         
                 $session->set('monQcm', $questions); 
+                dump($questions);
               
              
                 foreach($questions as $questionCurrent){            
@@ -96,7 +97,7 @@ class QcmController extends AbstractController
     }
 
     /**
-     * @Route("/qcm/resultat", name="traitement_qcm")
+     * @Route("/resultat", name="traitement_qcm")
      */
     public function traitement(UserRepository $reposite, QuestionQcmRepository $reposit, ReponseRepository $repo,Request $request, ObjectManager $manager)
     {
@@ -111,9 +112,10 @@ class QcmController extends AbstractController
         } 
 
         else {        
-            
+            dump($_POST);
             $quest = $request->request->all(); 
-            $session->set('mesReponses', $quest);             
+            $session->set('mesReponses', $quest);  
+            $questions=$session->get('monQcm');           
         
             foreach($quest as $prop=>$qst){
             $reponse= new Reponse();
@@ -129,15 +131,13 @@ class QcmController extends AbstractController
 
             $null = $repository->findAllNull($user);
             $mistakes = $repository->findMistakes($user);
+            //$toutBons =$repository->bravo($user);
             //dump($mistakes);
             $note = 3-($null)-($mistakes);
 
             if($note < 0 ){
             $note = 0;
-            }
-
-            $reset= $reposit->reset($user);
-            $resete= $repo->reset($user);  
+            }            
         
             $qcmTab= new QcmTab();                      
             $qcmTab->setIdUser($user);
@@ -146,11 +146,14 @@ class QcmController extends AbstractController
             $manager->persist($qcmTab);
             $manager->flush();
         
-
+            
             $userId = $this->getUser('session')->getId();
 
             $derniereNote = $reposite->derniereNote($userId,$note);
-            return $this->render('qcm/resultat.html.twig', ['user'=>$user, 'note'=>$note ]);
+            $questions=$session->get('monQcm');
+            $reset= $reposit->reset($user);
+            $resete= $repo->reset($user);  
+            return $this->render('qcm/resultat.html.twig', ['questions'=>$questions, 'user'=>$user, 'note'=>$note ]);            
         }    
            
            

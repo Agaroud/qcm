@@ -6,6 +6,37 @@
         <div class="text-center">
             <h4>{{user.username}} vous avez obtenu une note de {{note}} sur 3</h4>               
         </div>
-               
-  
-{% endblock %}      
+        </br>
+        {% if note < 3 %}
+            <div class="text-center">
+            <h4>{{user.username}} voici les bonnes réponses</h4>               
+            </div>
+            </br>
+            <div class="questions center-align">
+            {% for question in questions %}    
+            <article>
+                <h4>Question n° {{ loop.index }}  :  {{ question.theme}} </h4> 
+                <br>       
+                <div class="sujet">            
+                <h5>{{ question.sujet | raw }}</h5>           
+            </div>
+                <br>
+                
+                {% for proposition in question.propositions %}
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox"  id="defaultCheckedDisabled2" disabled {% if proposition.vrai is same as(1) %} checked="checked" {% endif %} value ="{{ question.id  }}" name="{{ proposition.id  }}">
+                        <label class="custom-control-label" for="defaultCheckedDisabled2">{{proposition.choix}}</label>
+                    </div>                   
+                <br>
+                {% endfor %}         
+            
+            </article>      
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+            <h4>Bravo !!!</h4>               
+        </div>
+        {% endif %}              
+        
+        {% endblock %}      

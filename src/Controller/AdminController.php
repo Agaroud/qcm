@@ -8,12 +8,14 @@ use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Entity\Proposition;
 use App\Entity\QuestionQcm;
+use App\Entity\QcmTab;
 use App\Repository\UserRepository;
 use App\Repository\ReponseRepository;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PropositionRepository;
 use App\Repository\QuestionQcmRepository;
+use App\Repository\QcmTabRepository;
 use App\Repository\AlertSalarieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -34,7 +36,14 @@ class AdminController extends AbstractController
         return $this->render('qcm/admin.html.twig', ['salaries'=>$salaries]);
     }
 
-   
+   /**
+     * @Route("/employeScores/{idUser}" , name="employe_scores")
+     */
+    public function scoreList(QcmTabRepository $reposit,$idUser) {
+        $scores=$reposit->findByidUser(array($idUser));
+        return $this->render('qcm/employeScores.html.twig', ['scores'=>$scores]);
+    }
+
         
 }
 

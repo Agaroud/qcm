@@ -32,8 +32,10 @@
                 <td>
                     {{ salarie.email }}
                 </td>
+
+                
                 <td>
-                    {{ salarie.derniereNote }}
+                    <a href="{{ path('employe_scores', { 'idUser': salarie.id}) }}">{{ salarie.derniereNote }}</a>
                 </td>
                 <td>
                     

@@ -56,6 +56,22 @@ class PropositionRepository extends ServiceEntityRepository
     $result= $query->execute();    
     return $result[0]['retenu'];
     }
+
+    public function bravo($user)
+    { 
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT c FROM App\Entity\Proposition p
+             JOIN App\Entity\QuestionQcm q 
+             WITH p.question = q.questionId
+             JOIN App\Entity\Reponse r
+             WITH p.id=r.idProposition
+             WHERE r.user=:var
+             AND p.vrai = '1' ")->setParameter('var',$user);            
+            $result= $query->execute();
+            return $result;
+            
+    }
     // /**
     //  * @return Proposition[] Returns an array of Proposition objects
     //  */
