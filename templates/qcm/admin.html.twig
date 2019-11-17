@@ -31,11 +31,10 @@
                 </td>
                 <td>
                     {{ salarie.email }}
-                </td>
-
+                </td>               
                 
                 <td>
-                    <a href="{{ path('employe_scores', { 'idUser': salarie.id}) }}">{{ salarie.derniereNote }}</a>
+                    <a href="{{ path('employe_scores', { 'idUser': salarie.id , 'firstNameUser' : salarie.prenom , 'nameUser' : salarie.nom}) }}">{{ salarie.derniereNote }}</a>
                 </td>
                 <td>
                     
