@@ -40,7 +40,7 @@ class AdminController extends AbstractController
      * @Route("/employeScores/{idUser}/{firstNameUser}/{nameUser}" , name="employe_scores")
      */
     public function scoreList(QcmTabRepository $reposit,$idUser, $firstNameUser, $nameUser) {
-        $scores=$reposit->findByidUser(array($idUser));        
+        $scores=$reposit->findByidUser(array($idUser), array('createdAt' => 'desc'));        
         return $this->render('qcm/employeScores.html.twig', ['scores'=>$scores , 'firstName'=>$firstNameUser, 'name'=>$nameUser]);
     }
 

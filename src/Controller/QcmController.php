@@ -40,6 +40,7 @@ class QcmController extends AbstractController
      */
     public function deconnect()
     {
+        
         return $this->render('qcm/deconnexion.html.twig');
     }
 
@@ -48,9 +49,10 @@ class QcmController extends AbstractController
     /**
      * @Route("/accueil", name="accueil")
      */
-    public function accueil(Request $request)
+    public function accueil(Request $request, QuestionQcmRepository $reposit)
     {
         $user=$this->getUser();
+        $reset= $reposit->reset($user);
         $session=$request->getSession();  
         //$session->remove('mesReponses');
         dump($session->get('mesReponses'));   
@@ -131,13 +133,22 @@ class QcmController extends AbstractController
 
             $null = $repository->findAllNull($user);
             $mistakes = $repository->findMistakes($user);
-            //$toutBons =$repository->bravo($user);
-            //dump($mistakes);
-            $note = 3-($null)-($mistakes);
 
-            if($note < 0 ){
+            $erreur = array_merge($null, $mistakes);
+            dump($erreur);
+            
+            
+
+            $nbrErreur = count(array_unique(array_column($erreur, 'mistake')));
+
+            dump($nbrErreur);
+                                             
+            
+            $note = 3-($nbrErreur);
+
+            /*if($note < 0 ){
             $note = 0;
-            }            
+            }*/           
         
             $qcmTab= new QcmTab();                      
             $qcmTab->setIdUser($user);
@@ -153,7 +164,7 @@ class QcmController extends AbstractController
             $questions=$session->get('monQcm');
             $reset= $reposit->reset($user);
             $resete= $repo->reset($user);  
-            return $this->render('qcm/resultat.html.twig', ['questions'=>$questions, 'user'=>$user, 'note'=>$note ]);            
+            return $this->render('qcm/resultat.html.twig', ['questions'=>$questions, 'user'=>$user, 'note'=>$note ]);        
         }    
            
            

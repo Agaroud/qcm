@@ -23,8 +23,8 @@ class PropositionRepository extends ServiceEntityRepository
     {
     
     $entityManager = $this->getEntityManager();
-    $query = $entityManager->createQuery(
-        "SELECT COUNT (p) AS retenu
+    $query = $entityManager->createQuery(/*COUNT (p) AS retenu*/
+        "SELECT  (p.question) as mistake
          FROM App\Entity\Proposition p
          JOIN App\Entity\QuestionQcm q         
          WITH p.question=q.questionId
@@ -35,15 +35,17 @@ class PropositionRepository extends ServiceEntityRepository
          AND r.idProposition IS NULL ")->setParameter('var',$user);
 
     // returns an array of Product objects
-    $result= $query->execute();    
-    return $result[0]['retenu'];        
+    $result= $query->execute();
+    dump($result); 
+    return $result;   
+    //return $result[0]['retenu'];        
     }
 
     public function findMistakes($user)//:array
     {
     $entityManager = $this->getEntityManager();
-    $query = $entityManager->createQuery(
-        "SELECT COUNT (p) AS retenu
+    $query = $entityManager->createQuery(/*COUNT (p) AS retenu*/
+        "SELECT (p.question) as mistake
          FROM App\Entity\Proposition p
          JOIN App\Entity\QuestionQcm q
          WITH p.question = q.questionId
@@ -52,12 +54,15 @@ class PropositionRepository extends ServiceEntityRepository
          WHERE r.user=:var   
          AND p.vrai = '0' ")->setParameter('var',$user);
 
+
     // returns an array of Product objects
-    $result= $query->execute();    
-    return $result[0]['retenu'];
+    $result= $query->execute();
+    dump($result);       
+    //return $result[0]['retenu'];
+    return $result;
     }
 
-    public function bravo($user)
+    /*public function bravo($user)
     { 
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
