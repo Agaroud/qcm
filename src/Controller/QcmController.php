@@ -144,7 +144,7 @@ class QcmController extends AbstractController
             dump($nbrErreur);
                                              
             
-            $note = 3-($nbrErreur);
+            $note = 5-($nbrErreur);
 
             /*if($note < 0 ){
             $note = 0;

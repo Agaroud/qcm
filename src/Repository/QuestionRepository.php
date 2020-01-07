@@ -24,7 +24,7 @@ class QuestionRepository extends ServiceEntityRepository
     {    
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
-            "SELECT q FROM App\Entity\Question q ORDER BY RAND()")->setMaxResults(3);            
+            "SELECT q FROM App\Entity\Question q ORDER BY RAND()")->setMaxResults(5);            
             $result= $query->execute();
             return $result;            
     }
