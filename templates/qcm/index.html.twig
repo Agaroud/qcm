@@ -32,7 +32,7 @@
             <br>
             
             {% for proposition in question.propositions %}
-                <div class="form-group">
+                <div class="form-group pl-3">
                     <input class="form-check-input" type="checkbox" value ="{{ question.id  }}" name="{{ proposition.id  }}"
                      >
                     <label class="form-check-label" for="{{proposition.id}}">{{proposition.choix}}</label>
