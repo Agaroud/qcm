@@ -9,13 +9,13 @@
     </br>
     </br>
     <h4 class="text-center">Liste des salariés</h4>
-    <div class="table-responsive-sm">
+    <div class="responsive-table-line">
     <table class="table table-sm table-hover">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Nom</th>
-                <th scope="col">Prenom</th>
-                <th scope="col">Matricule</th>
+                <th  scope="col">Prenom</th>
+                <th  scope="col">Matricule</th>
                 <th scope="col">Email</th>
                 <th scope="col">Derniere Note</th>
             </tr>
@@ -23,20 +23,20 @@
         <tbody>    
         {% for salarie in salaries %}
             <tr>
-                <td>
+                <td data-title="Nom" >
                     {{ salarie.nom }}
                 </td>
-                <td>
+                <td data-title="Prénom" >
                     {{ salarie.prenom }}
                 </td>
-                <td>
+                <td data-title="Matricule" >
                     {{ salarie.matricule }}
                 </td>
-                <td>
+                <td data-title="Email" >
                     {{ salarie.email }}
                 </td>               
                 
-                <td>
+                <td data-title="Dernière note" >
                     <a href="{{ path('employe_scores', { 'idUser': salarie.id , 'firstNameUser' : salarie.prenom , 'nameUser' : salarie.nom}) }}">{{ salarie.derniereNote }}</a>
                 </td>
                 <td>
