@@ -8,6 +8,7 @@
     </br>
     </br>
     </br>
+    <a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{{path('admin_questions')}}">Voir la liste des questions</a>
     <h4 class="text-center">Liste des salariés</h4>
     <div class="responsive-table-line">
     <table class="table table-sm table-hover">
@@ -39,9 +40,7 @@
                 <td data-title="Dernière note" >
                     <a href="{{ path('employe_scores', { 'idUser': salarie.id , 'firstNameUser' : salarie.prenom , 'nameUser' : salarie.nom}) }}">{{ salarie.derniereNote }}</a>
                 </td>
-                <td>
-                    
-                </td>
+                
             </tr>
         {% endfor %}
         </tbody>
