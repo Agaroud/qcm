@@ -74,6 +74,14 @@ class AdminController extends AbstractController
         return $this->render('qcm/questions.html.twig', ['questions'=>$questions]);
     }
 
+    /**
+     * @Route("/propositions/{id}" , name="propositions_list")
+     */
+    public function propositionList(QuestionRepository $repo, $id) {
+        
+        $question=$repo->find($id);    
+        return $this->render('qcm/propositions.html.twig', ['question'=>$question]);
+    }
 
         
 }
