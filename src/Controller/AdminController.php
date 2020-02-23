@@ -10,6 +10,7 @@ use App\Entity\Proposition;
 use App\Entity\QuestionQcm;
 use App\Entity\QcmTab;
 use App\Form\QuestionType;
+use App\Form\PropositionType;
 use App\Repository\UserRepository;
 use App\Repository\ReponseRepository;
 use App\Repository\QuestionRepository;
@@ -77,11 +78,48 @@ class AdminController extends AbstractController
     /**
      * @Route("/propositions/{id}" , name="propositions_list")
      */
-    public function propositionList(QuestionRepository $repo, $id) {
+    public function propositionList( Request $request, ObjectManager $manager, QuestionRepository $repo, $id) {
         
-        $question=$repo->find($id);    
-        return $this->render('qcm/propositions.html.twig', ['question'=>$question]);
+        $question=$repo->find($id); 
+        
+
+        //new proposition form//
+        $proposition= new Proposition();
+        $form = $this->createForm(PropositionType::class, $proposition);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){            
+            $proposition->setQuestion($question);
+            $manager->persist($proposition);
+            $manager->flush(); 
+            
+            return $this->redirectToRoute('propositions_list' , ['id'=> $id]);    
+           }   
+        return $this->render('qcm/propositions.html.twig', ['question'=>$question, 'formProposition'=> $form->createView()]);
+        
+        
     }
+
+    /**
+     * @Route("/newProposition" , name="admin_newproposition")
+     */
+    /*public function nouvelleProposition(Request $request, ObjectManager $manager){
+        $proposition= new Proposition();
+        $form = $this->createForm(PropositionType::class, $proposition);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){            
+            
+            $manager->persist($proposition);
+            $manager->flush(); 
+            
+            return $this->redirectToRoute('propositions_list');    
+           }
+
+        return $this-> render('qcm/newProposition.html.twig', ['form'=> $form->createView()
+        ]);
+    }*/
+
 
         
 }
