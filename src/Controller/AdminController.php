@@ -70,10 +70,24 @@ class AdminController extends AbstractController
      * @Route("/questions" , name="admin_questions")
      */
 
-    public function questions(QuestionRepository $repo) {
+    public function questions(QuestionRepository $repo, Request $request, ObjectManager $manager) {
+        $question= new Question();
+        $form = $this->createForm(QuestionType::class, $question);
+        $form->handleRequest($request);
         $questions=$repo->findAll();
-        return $this->render('qcm/questions.html.twig', ['questions'=>$questions]);
-    }
+        
+
+        if($form->isSubmitted() && $form->isValid()){            
+            
+            $manager->persist($question);
+            $manager->flush(); 
+            
+            return $this->redirectToRoute('admin_questions');    
+        }
+
+        return $this->render('qcm/questions.html.twig', ['questions'=>$questions, 'formQuestion'=> $form->createView()]);
+
+        }
 
     /**
      * @Route("/propositions/{id}" , name="propositions_list")
