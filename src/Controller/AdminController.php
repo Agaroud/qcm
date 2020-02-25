@@ -114,6 +114,41 @@ class AdminController extends AbstractController
         
     }
 
+/**
+ * @Route("/question/{id}/delete", name="question_delete")
+ */
+public function questionRemove(ObjectManager $manager, QuestionRepository $repo, $id)
+{
+    
+
+    $question=$repo->find($id); 
+    $manager->remove($question);
+    $manager->flush();
+
+    // Suggestion: add a message in the flashbag
+
+    // Redirect to the table page
+    return $this->redirectToRoute('admin_questions'); 
+}
+
+/**
+ * @Route("/propositions/{pid}/{id}/delete", name="proposition_delete")
+ */
+public function propositionRemove(ObjectManager $manager, PropositionRepository $repo, $pid, $id)
+{
+    
+
+    $proposition=$repo->find($pid); 
+    $manager->remove($proposition);
+    $manager->flush();
+
+    // Suggestion: add a message in the flashbag
+
+    // Redirect to the table page
+    return $this->redirectToRoute('propositions_list', ['id'=> $id]); 
+}
+
+
     /**
      * @Route("/newProposition" , name="admin_newproposition")
      */

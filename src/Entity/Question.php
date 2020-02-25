@@ -32,7 +32,7 @@ class Question
     private $sujet;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Proposition", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposition", mappedBy="question", cascade={"remove"})
      */
     private $propositions;
 
