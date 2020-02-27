@@ -3,13 +3,13 @@
 {% block body %}
 
     {% if error %}
-        <div>{{ error.message | replace({"Bad credentials." : "Email ou mot de passe inconnus"}) }}</div>
+        <div>{{ error.message | replace({"Bad credentials." : "Pseudo ou mot de passe inconnus"}) }}</div>
     {% endif %}
     <h3>Connexion</h3>
 
     <form action="{{ path('security_login')}}" method="post">
         <div class="form-group">
-            <input placeholder="Adresse email complète..." required id="username" name="_username" value="{{ last_username }}"
+            <input placeholder="Pseudo..." required id="username" name="_username" value="{{ last_username }}"
             type="text" class="form-control">
         </div>
         <div class="form-group">
@@ -26,5 +26,8 @@
         </div>
     </form>
     <a class="btn btn-light" href="{{ path('security_registration')}}" role="button">Pas encore de compte?</a>
+    </br>
+    </br>
+    </br>
     
 {% endblock %}      
