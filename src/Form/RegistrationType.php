@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationType extends AbstractType
@@ -16,7 +17,7 @@ class RegistrationType extends AbstractType
             //->add('email')
             ->add('nom')
             ->add('prenom')            
-            ->add('username')
+            ->add('username', TextType::class)
             //->add('matricule')
             ->add('password', PasswordType::class)
             ->add('confirm_password', PasswordType::class)

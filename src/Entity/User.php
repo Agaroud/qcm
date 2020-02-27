@@ -45,12 +45,13 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=255)        
+     * @ORM\Column(type="string", length=255) 
+     * @Assert\Length(min=8 , minMessage="Votre pseudo doit faire au minimum 8 caractères")     
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)     
      */
     private $matricule;
 
