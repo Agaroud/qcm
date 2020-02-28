@@ -16,8 +16,9 @@
             <tr>
                 <th scope="col">Nom</th>
                 <th  scope="col">Prenom</th>
-                <th  scope="col">Matricule</th>
-                <th scope="col">Email</th>
+                {#<th  scope="col">Matricule</th>
+                <th scope="col">Email</th>#}
+                <th scope="col">Pseudo</th>
                 <th scope="col">Derniere Note</th>
             </tr>
         </thead>
@@ -30,11 +31,11 @@
                 <td data-title="Prénom" >
                     {{ salarie.prenom }}
                 </td>
-                <td data-title="Matricule" >
+                {#<td data-title="Matricule" >
                     {{ salarie.matricule }}
-                </td>
-                <td data-title="Email" >
-                    {{ salarie.email }}
+                </td>#}
+                <td data-title="Pseudo" >
+                    {{ salarie.username }}
                 </td>               
                 
                 <td data-title="Dernière note" >

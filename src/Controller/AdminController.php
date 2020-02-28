@@ -39,7 +39,7 @@ class AdminController extends AbstractController
     }
 
    /**
-     * @Route("/employeScores/{idUser}/{firstNameUser}/{nameUser}" , name="employe_scores")
+     * @Route("/admin/employeScores/{idUser}/{firstNameUser}/{nameUser}" , name="employe_scores")
      */
     public function scoreList(QcmTabRepository $reposit,$idUser, $firstNameUser, $nameUser) {
         $scores=$reposit->findByidUser(array($idUser), array('createdAt' => 'desc'));        
@@ -47,7 +47,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/newQuestion" , name="admin_newquestion")
+     * @Route("/admin/newQuestion" , name="admin_newquestion")
      */
     public function nouvelleQuestion(Request $request, ObjectManager $manager){
         $question= new Question();
@@ -67,7 +67,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/questions" , name="admin_questions")
+     * @Route("/admin/questions" , name="admin_questions")
      */
 
     public function questions(QuestionRepository $repo, Request $request, ObjectManager $manager) {
@@ -90,7 +90,7 @@ class AdminController extends AbstractController
         }
 
     /**
-     * @Route("/propositions/{id}" , name="propositions_list")
+     * @Route("/admin/propositions/{id}" , name="propositions_list")
      */
     public function propositionList( Request $request, ObjectManager $manager, QuestionRepository $repo, $id) {
         
@@ -115,7 +115,7 @@ class AdminController extends AbstractController
     }
 
 /**
- * @Route("/question/{id}/delete", name="question_delete")
+ * @Route("/admin/question/{id}/delete", name="question_delete")
  */
 public function questionRemove(ObjectManager $manager, QuestionRepository $repo, $id)
 {
@@ -132,7 +132,7 @@ public function questionRemove(ObjectManager $manager, QuestionRepository $repo,
 }
 
 /**
- * @Route("/propositions/{pid}/{id}/delete", name="proposition_delete")
+ * @Route("/admin/propositions/{pid}/{id}/delete", name="proposition_delete")
  */
 public function propositionRemove(ObjectManager $manager, PropositionRepository $repo, $pid, $id)
 {
