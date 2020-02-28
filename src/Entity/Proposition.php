@@ -26,7 +26,7 @@ class Proposition
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Choice({"0", "1"})
+       
      */
     private $vrai;
 
