@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/inscReg", name="security_registration")
+     * @Route("/admin/inscReg", name="security_registration")
      */     
     public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder){
 
@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('admin_homepage');
         }
 
         return $this->render('security/registration.html.twig', [ 'form' => $form->createView()]);

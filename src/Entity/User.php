@@ -87,6 +87,8 @@ class User implements UserInterface
      */
     private $derniereNote;
 
+    
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QcmTab", mappedBy="idUser", cascade={"remove"})
      */
@@ -268,6 +270,8 @@ class User implements UserInterface
 
         return $this;
     }
+
+    
 
     /**
      * @return Collection|QcmTab[]
