@@ -14,6 +14,7 @@
     <table class="table table-sm table-hover">
         <thead class="thead-dark">
             <tr>
+                <th scope="col">Supprimer</th>
                 <th scope="col">Nom</th>
                 <th  scope="col">Prenom</th>
                 {#<th  scope="col">Matricule</th>
@@ -25,6 +26,12 @@
         <tbody>    
         {% for salarie in salaries %}
             <tr>
+                <td data-title="Supprimer" >
+                <form action="{{ path('user_delete', { 'id': salarie.id }) }}" method="POST" class="delete-button-form">
+                    <input name="_method" value="DELETE" type="hidden">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>                    
+                </td>
                 <td data-title="Nom" >
                     {{ salarie.nom }}
                 </td>

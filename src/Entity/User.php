@@ -73,12 +73,12 @@ class User implements UserInterface
     private $roles = array();
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="user", cascade={"remove"})
      */
     private $reponses;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuestionQcm", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuestionQcm", mappedBy="user", cascade={"remove"})
      */
     private $questionQcms;
 
@@ -88,7 +88,7 @@ class User implements UserInterface
     private $derniereNote;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QcmTab", mappedBy="idUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\QcmTab", mappedBy="idUser", cascade={"remove"})
      */
     private $qcmTabs;
 

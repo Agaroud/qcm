@@ -148,6 +148,23 @@ public function propositionRemove(ObjectManager $manager, PropositionRepository 
     return $this->redirectToRoute('propositions_list', ['id'=> $id]); 
 }
 
+/**
+ * @Route("/admin/user/{id}/delete", name="user_delete")
+ */
+public function userRemove(ObjectManager $manager, UserRepository $repo, $id)
+{
+    
+
+    $user=$repo->find($id); 
+    $manager->remove($user);
+    $manager->flush();
+
+    // Suggestion: add a message in the flashbag
+
+    // Redirect to the table page
+    return $this->redirectToRoute('admin_homepage'); 
+}
+
 
     /**
      * @Route("/newProposition" , name="admin_newproposition")
