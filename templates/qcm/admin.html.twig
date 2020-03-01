@@ -20,7 +20,7 @@
                 {#<th  scope="col">Matricule</th>
                 <th scope="col">Email</th>#}
                 <th scope="col">Pseudo</th>
-                <th scope="col">Derniere Note</th>
+                <th scope="col">Note</th>
             </tr>
         </thead>
         <tbody>    
@@ -45,7 +45,7 @@
                     {{ salarie.username }}
                 </td>               
                 
-                <td data-title="Dernière note" >
+                <td data-title="Note" >
                     <a href="{{ path('employe_scores', { 'idUser': salarie.id , 'firstNameUser' : salarie.prenom , 'nameUser' : salarie.nom}) }}">{{ salarie.derniereNote }}</a>
                 </td>
                 
