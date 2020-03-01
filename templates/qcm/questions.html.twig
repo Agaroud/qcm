@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formQuestion 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+</br></br>
+    
+    <h4>Ajouter une nouvelle question</h4>
+    {{form_start(formQuestion)}}
+    {{form_row(formQuestion.theme)}}
+    {{form_row(formQuestion.sujet)}}
+    </br>
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{form_end(formQuestion)}}
+
+    {#<a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{{path('admin_newquestion')}}">Ajouter une nouvelle question</a>#}
+    <h4 class="text-center">Liste des questions</h4>
+    <div class="responsive-table-line">
+    <table class="table table-sm table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Supprimer</th>
+                <th scope="col">Numero</th>
+                <th scope="col">Thème</th>
+                <th  scope="col">Sujet</th>   
+                <th  scope="col">Propositions</th>              
+            </tr>
+        </thead>
+        <tbody>    
+        {% for question in questions %}
+            <tr>
+             <td data-title="Supprimer" >
+                <form action="{{ path('question_delete', { 'id': question.id }) }}" method="POST" class="delete-button-form">
+                    <input name="_method" value="DELETE" type="hidden">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>                    
+                </td>
+                <td data-title="Question n°" >
+                    {{ question.id }}
+                </td>
+                <td data-title="Theme" >
+                    {{ question.theme }}
+                </td>
+                <td data-title="Sujet" >
+                    {{ question.sujet }}
+                </td>
+                <td data-title="Propositions" >
+                    <a class="btn btn-info" role="button" aria-pressed="true" href="{{ path('propositions_list', { 'id': question.id }) }}">Voir les propositions</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+    </div>  
+    </br></br></br></br> 
+{% endblock %}

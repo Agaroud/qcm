@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    </br>
+    <div class="text-center">
+        <h4>Toutes les notes du salarié {{firstName}} {{name}}</h4>        
+    </div>
+    </br>
+    </br>
+    </br>
+
+    <a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Retour tableau de bord</a>
+    <table class="table">
+        <tr>
+            <th class="thead-light">Date</th>
+            <th class="thead-light">Note</th>
+                          
+        </tr>
+        {% for score in scores %}
+            <tr>
+                <td>
+                    {{ score.createdAt|date("d/m/Y à H:i:s") }}
+                </td>
+                <td>
+                    {{ score.note }}
+                </td>
+                
+            </tr>
+        {% endfor %}
+    </table> 
+    </br></br></br>
+{% endblock %}   

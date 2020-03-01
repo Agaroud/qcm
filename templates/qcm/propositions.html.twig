@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formProposition 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+</br></br>
+    </br></br>
+    {#<a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{{path('admin_newproposition')}}">Ajouter une nouvelle proposition</a>#}
+    <h4 class="text-center">Liste des Propositions pour la question n° {{question.id}} : {{question.sujet}}</h4>
+    <div class="responsive-table-line">
+    <table class="table table-sm table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Supprimer</th>
+                <th scope="col">Numero</th>
+                <th scope="col">Choix</th>
+                <th scope="col">Vrai</th>
+                
+                            
+            </tr>
+        </thead>
+        <tbody>    
+        {% for proposition in question.propositions %}
+            <tr>
+                <td data-title="Supprimer" >
+                    <form action="{{ path('proposition_delete', { 'pid': proposition.id , 'id': question.id}) }}" method="POST" class="delete-button-form">
+                        <input name="_method" value="DELETE" type="hidden">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>    
+                    
+                </td>
+                <td data-title="Numero" >
+                    {{ proposition.id }}
+                </td>
+                <td data-title="Choix" >
+                    {{ proposition.choix }}
+                </td>
+                <td data-title="Vrai" >
+                    {{ proposition.vrai }}
+                </td>
+                              
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+    </div> 
+    <h4>Ajouter une nouvelle proposition</h4>
+    {{ form_start(formProposition) }}
+    
+    {{ form_row(formProposition.choix) }}
+    {{ form_row(formProposition.vrai, {'label': ' Vrai (0 = faux , 1 = vrai) '}) }}
+    </br>
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(formProposition) }} 
+    </br></br></br></br> 
+{% endblock %}
