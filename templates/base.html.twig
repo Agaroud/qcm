@@ -31,10 +31,10 @@
             {% if not app.user %}
             
               <li class="nav-item ">
-                <a class="nav-link" href="{{ path('home')}}">Accueil<span class="sr-only">(current)</span></a>
+                <a class="nav-link pl-3" href="{{ path('home')}}">Accueil<span class="sr-only">(current)</span></a>
               </li>  
               <li class="nav-item ">
-                <a class="nav-link" href="{{ path('security_login')}}">connexion<span class="sr-only">(current)</span></a>
+                <a class="nav-link pl-3" href="{{ path('security_login')}}">connexion<span class="sr-only">(current)</span></a>
               </li>  
             {% else %}
               {% if is_granted('ROLE_ADMIN') %}
@@ -43,10 +43,10 @@
                   </li>
               {% endif %}
               <li class="nav-item ">
-                <a class="nav-link" href="{{ path('qcm')}}">QCM<span class="sr-only">(current)</span></a>
+                <a class="nav-link pl-3" href="{{ path('qcm')}}">QCM<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="{{ path('security_logout')}}">Deconnexion<span class="sr-only">(current)</span></a>
+                <a class="nav-link pl-3" href="{{ path('security_logout')}}">Deconnexion<span class="sr-only">(current)</span></a>
               </li>
             {% endif %} 
           </ul>      
