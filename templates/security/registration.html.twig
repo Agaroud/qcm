@@ -2,8 +2,12 @@
 
 {% block body %}
 </br>
-
-    <h3>Veuillez vous enregistrer</h3>
+</br>
+<a class="btn btn-secondary btn-md active float-right" role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Retour à l'espace admin</a>
+</br>
+</br>
+    <h4>Veuillez enregistrer un nouveau candidat</h4>
+</br>
 
     {{ form_start(form) }}
     {#{{ form_row(form.email, {'attr' : {'class' : 'form-control'}})}}#}

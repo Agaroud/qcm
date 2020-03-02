@@ -11,8 +11,15 @@
         <h4>Content de vous revoir {{user.username}}</h4>        
     </div>
     </br>
-    <div class="text-center">
-        <h4>Appuyez sur l'onglet QCM pour commencer le test<h4> 
-    </div>
+        {% if is_granted('ROLE_ADMIN') %} 
+            <div class="text-center">                 
+                    <a class="btn btn-success btn-lg active " role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Aller sur l'espace admin</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h4>Appuyez sur l'onglet QCM pour commencer le test<h4> 
+            </div>      
+        {% endif %}   
+    
     {% endif %}   
 {% endblock %}
