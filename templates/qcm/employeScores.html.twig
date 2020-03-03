@@ -2,6 +2,8 @@
 
 {% block body %}
     </br>
+    </br>
+    </br>
     <div class="text-center">
         <h4>Toutes les notes du salarié {{firstName}} {{name}}</h4>        
     </div>
@@ -9,13 +11,19 @@
     </br>
     </br>
 
-    <a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Retour tableau de bord</a>
-    <table class="table">
-        <tr>
-            <th class="thead-light">Date</th>
-            <th class="thead-light">Note</th>
-                          
-        </tr>
+    <a class="btn btn-secondary btn-md float-right" role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Retour à l'espace admin</a>
+    </br>
+    </br>
+    </br>
+    <table class="table table-sm table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Note</th>
+                                
+            </tr>
+        </thead>
+        <tbody>
         {% for score in scores %}
             <tr>
                 <td>
@@ -27,6 +35,8 @@
                 
             </tr>
         {% endfor %}
+        </tbody>
     </table> 
-    </br></br></br>
+    </br></br></br></br>
+    </br>
 {% endblock %}   
