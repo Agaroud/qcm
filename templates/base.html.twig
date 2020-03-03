@@ -30,11 +30,11 @@
       
             {% if not app.user %}
             
-              <li class="nav-item ">
+              <li class="nav-item">
                 <a class="nav-link pl-3" href="{{ path('home')}}">Accueil<span class="sr-only">(current)</span></a>
               </li>  
               <li class="nav-item ">
-                <a class="nav-link pl-3" href="{{ path('security_login')}}">connexion<span class="sr-only">(current)</span></a>
+                <a class="nav-link pl-3" href="{{ path('security_login')}}">Connexion<span class="sr-only">(current)</span></a>
               </li>  
             {% else %}
               {% if is_granted('ROLE_ADMIN') %}
@@ -82,7 +82,8 @@
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
           <script src="/js/cookiechoices.js"></script>
-        <script>document.addEventListener ('DOMContentLoaded', function(event) { cookieChoices.showCookieConsentBar ('Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l\’utilisation des cookies.','J\’accepte', 'En savoir plus'); });</script>          
+        <script>document.addEventListener ('DOMContentLoaded', function(event) { cookieChoices.showCookieConsentBar ('Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l\’utilisation des cookies.','J\’accepte', 'En savoir plus'); });</script>
+               
         {% endblock %}
     </body>
 </html>

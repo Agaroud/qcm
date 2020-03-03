@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    </br>
+    </br>
+    </br>
     {% if error %}
         <div>{{ error.message | replace({"Bad credentials." : "Pseudo ou mot de passe inconnus"}) }}</div>
     {% endif %}
