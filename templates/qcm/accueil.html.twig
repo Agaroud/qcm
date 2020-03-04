@@ -9,16 +9,16 @@
         <h3>Merci de vous connecter</h3>
      </div>
     {% else %}
-    <div class="text-center">
-        <h4>Content de vous revoir {{user.username}}</h4>        
+    <div class="text-center welcome">
+        <h4 >Content de vous revoir {{user.username}}</h4>        
     </div>
     </br>
         {% if is_granted('ROLE_ADMIN') %} 
-            <div class="text-center">                 
+            <div class="text-center welcome">                 
                     <a class="btn btn-success btn-lg active " role="button" aria-pressed="true" href="{{path('admin_homepage')}}">Aller sur l'espace admin</a>
             </div>
         {% else %}
-            <div class="text-center">
+            <div class="text-center welcome">
                 <h4>Appuyez sur l'onglet QCM pour commencer le test<h4> 
             </div>      
         {% endif %}   
