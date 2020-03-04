@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    </br>
-    </br>
+{% block body %}   
     </br>
     {% if error %}
         <div>{{ error.message | replace({"Bad credentials." : "Pseudo ou mot de passe inconnus"}) }}</div>
@@ -22,14 +20,10 @@
             
 
     <input type="hidden" name="_csrf_token"
-        value="{{ csrf_token('authenticate') }}"
-    >
+        value="{{ csrf_token('authenticate') }}">
             <button type="submit" class="btn btn-success">Connexion!</button>
         </div>
-    </form>
-    
-    </br>
-    </br>
-    </br>
+        
+    </form></br></br></br></br></br>      
     
 {% endblock %}      
