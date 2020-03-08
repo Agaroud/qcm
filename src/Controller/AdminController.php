@@ -165,6 +165,16 @@ public function userRemove(ObjectManager $manager, UserRepository $repo, $id)
     return $this->redirectToRoute('admin_homepage'); 
 }
 
+/**
+ * @Route("/admin/user/{id}/enable", name="user_enable")
+ */
+public function userEnable(ObjectManager $manager, UserRepository $repo, $id)
+{ 
+
+    $activer = $repo->activerUser($id);
+    return $this->redirectToRoute('admin_homepage'); 
+}
+
 
     /**
      * @Route("/newProposition" , name="admin_newproposition")

@@ -66,6 +66,10 @@ class User implements UserInterface
      */
     public $confirm_password;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default":false})     
+     */
+    private $enabled;
     
     /**
      * @ORM\Column(name="roles", type="array")
@@ -181,6 +185,17 @@ class User implements UserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 

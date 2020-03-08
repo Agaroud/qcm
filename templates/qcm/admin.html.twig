@@ -29,7 +29,7 @@
                 <th scope="col">Email</th>#}
                 <th scope="col">Pseudo</th>
                 <th scope="col">Note</th>
-                
+                <th scope="col">Autoriser</th>
             </tr>
         </thead>
         <tbody>    
@@ -57,7 +57,20 @@
                 <td data-title="Note" >
                     <a href="{{ path('employe_scores', { 'idUser': salarie.id , 'firstNameUser' : salarie.prenom , 'nameUser' : salarie.nom}) }}">{{ salarie.derniereNote }}</a>
                 </td>
-                
+                {% if not salarie.enabled %}
+                    <td data-title="Autoriser" >
+                        <form action="{{ path('user_enable', { 'id': salarie.id }) }}" method="POST" class="update-button-form">
+                        <input name="_method" value="ENABLE" type="hidden">
+                        <button type="submit" class="btn btn-success">Autoriser</button>
+                        </form> 
+                    </td> 
+                {% else %}
+                    <td data-title="Autoriser" >
+                        
+                        <button type="button" class="btn btn-success" disabled>Déjà autorisé</button>
+                        
+                    </td>
+                {% endif %}
                 
             </tr>
         {% endfor %}

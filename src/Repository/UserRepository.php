@@ -34,6 +34,21 @@ class UserRepository extends ServiceEntityRepository
           
     }
 
+    public function activerUser($userId)//:array
+    {
+    
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        "UPDATE App\Entity\User u
+         SET u.enabled = true         
+         WHERE u.id = '$userId' ");
+
+    // returns an array of Product objects
+    $result= $query->execute();    
+          
+    }
+
+
    
 
     // /**
