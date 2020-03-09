@@ -116,6 +116,7 @@ class QcmController extends AbstractController
         else {        
             dump($_POST);
             $quest = $request->request->all(); 
+            
             $session->set('mesReponses', $quest);  
             $questions=$session->get('monQcm');           
         
@@ -128,7 +129,7 @@ class QcmController extends AbstractController
             $manager->persist($reponse);
             $manager->flush();
             }   
-
+            
             $repository = $this->getDoctrine()->getRepository(Proposition::class);
 
             $null = $repository->findAllNull($user);
@@ -163,9 +164,10 @@ class QcmController extends AbstractController
             $derniereNote = $reposite->derniereNote($userId,$note);
             
             $questions=$session->get('monQcm');
+            $reponses=$session->get('mesReponses');
             $reset= $reposit->reset($user);
             $resete= $repo->reset($user);  
-            return $this->render('qcm/resultat.html.twig', ['questions'=>$questions, 'user'=>$user, 'note'=>$note ]);        
+            return $this->render('qcm/resultat.html.twig', ['questions'=>$questions,'reponses'=>$reponses ,'user'=>$user, 'note'=>$note ]);        
         }    
            
            

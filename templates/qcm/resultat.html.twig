@@ -10,7 +10,10 @@
         </br>
         {% if note < 5 %}
             <div class="text-center welcome">
-            <h4>{{user.username}} voici les bonnes réponses</h4>               
+            <h5>{{user.username}} voici les bonnes réponses (<div class="d-inline custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultCheckedDisabled" checked="" disabled="">
+          <label class="custom-control-label" for="defaultCheckedDisabled"></label>
+        </div>: Ce qu'il fallait répondre. En bleu : Ce que vous avez répondu.)</h5>               
             </div>
             </br></br>
     
@@ -27,8 +30,14 @@
                 {% for proposition in question.propositions %}
                     <div class="custom-control custom-checkbox pl-5">
                         <input class="custom-control-input" type="checkbox"  id="defaultCheckedDisabled2" disabled {% if proposition.vrai is same as(1) %} checked="checked" {% endif %} value ="{{ question.id  }}" name="{{ proposition.id  }}">
-                        <label class="custom-control-label" for="defaultCheckedDisabled2">{{proposition.choix}}</label>
-                    </div>                   
+                        
+                        <label class="custom-control-label" for="defaultCheckedDisabled2" 
+                        {% for key in reponses|keys %}
+                            {% if proposition.id is same as(key) %} style="color:blue;"
+                            {% endif %}
+                        {% endfor %}>
+                        {{proposition.choix}}</label>                 
+                    </div>
                 <br>
                 {% endfor %}         
             
