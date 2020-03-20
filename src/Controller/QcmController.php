@@ -118,8 +118,8 @@ class QcmController extends AbstractController
             $quest = $request->request->all(); 
             
             $session->set('mesReponses', $quest);  
-            $questions=$session->get('monQcm');           
-        
+            $questions=$session->get('monQcm');   
+            
             foreach($quest as $prop=>$qst){
             $reponse= new Reponse();
             $reponse->setQuestionId($qst);
@@ -150,11 +150,19 @@ class QcmController extends AbstractController
             /*if($note < 0 ){
             $note = 0;
             }*/           
-        
+            $questions=$session->get('monQcm');  
+            dump($questions);        
+            $reponses=$session->get('mesReponses');
+            dump($reponses);
+            /*$serializeR = serialize($reponses); 
+            $serializeQ = serialize($questions);*/
+
             $qcmTab= new QcmTab();                      
             $qcmTab->setIdUser($user);
             $qcmTab->setNote($note);
             $qcmTab->setCreatedAt(new \DateTime());
+            $qcmTab->setReponses($reponses);
+            $qcmTab->setQuestions($questions);
             $manager->persist($qcmTab);
             $manager->flush();
         
@@ -163,8 +171,11 @@ class QcmController extends AbstractController
 
             $derniereNote = $reposite->derniereNote($userId,$note);
             
-            $questions=$session->get('monQcm');
-            $reponses=$session->get('mesReponses');
+               
+            /*dump($serializeR);
+            $array = unserialize($serializeR);
+            dump($array);*/
+
             $reset= $reposit->reset($user);
             $resete= $repo->reset($user);  
             return $this->render('qcm/resultat.html.twig', ['questions'=>$questions,'reponses'=>$reponses ,'user'=>$user, 'note'=>$note ]);        

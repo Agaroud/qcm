@@ -28,7 +28,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Email()
      */
     private $email;
@@ -51,7 +51,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)     
+     * @ORM\Column(type="string", length=255, nullable=true)     
      */
     private $matricule;
 
@@ -67,7 +67,7 @@ class User implements UserInterface
     public $confirm_password;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":false})     
+     * @ORM\Column(type="boolean", options={"default":false}, nullable=true)     
      */
     private $enabled;
     

@@ -176,6 +176,24 @@ public function userEnable(ObjectManager $manager, UserRepository $repo, $id)
 }
 
 
+/**
+     * @Route("/admin/employeArchive/{firstName}/{name}/{note}/{id}" , name="employe_archive")
+     */
+    public function employeArchive(QcmTabRepository $repo, $firstName, $name, $note, $id) {
+        $qcmArchive=$repo->find($id); 
+        dump($qcmArchive);
+        $reponses = $qcmArchive->getReponses();
+        dump($reponses);
+        $questions = $qcmArchive->getQuestions();
+        $createdAt = $qcmArchive->getCreatedAt();
+        $first= $firstName;
+        $nam= $name;
+        /*$arrayReponses = unserialize($reponses);
+        $arrayQuestions = unserialize($questions);*/
+        return $this->render('qcm/qcmArchive.html.twig', ['firstName'=>$first , 'name'=>$nam , 'questions'=>$questions,'reponses'=>$reponses , 'createdAt'=>$createdAt , 'note'=>$note ]);
+    }
+
+
     /**
      * @Route("/newProposition" , name="admin_newproposition")
      */

@@ -30,7 +30,7 @@
                     {{ score.createdAt|date("d/m/Y à H:i:s") }}
                 </td>
                 <td>
-                    {{ score.note }}
+                    <a class="btn btn-info" role="button" aria-pressed="true" href="{{ path('employe_archive', { 'firstName' : firstName , 'name' : name , 'note' : score.note , 'id': score.id }) }}">{{ score.note }}</a>
                 </td>
                 
             </tr>
